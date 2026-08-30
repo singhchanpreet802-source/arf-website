@@ -75,21 +75,45 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ---- interest form ----
-     NOTE: This is a client-side placeholder only. No submission endpoint
-     is wired up yet. To collect real submissions, connect this form to
-     a backend (Google Forms/Sheets, Formspree, or a custom endpoint)
-     before launch — do this deliberately, not silently. */
+     Submits to the ARF Command Center's public API, which stores it in the
+     `interest_submissions` table — visible to staff under Responses at
+     /responses (Outreach/Registration/President/Super Admin only).
+
+     STAFF: update ARF_CC_API_BASE once the Command Center is deployed to a
+     real, reachable address (see the matching note in staff.html). It
+     currently points at localhost for local development only — submissions
+     made against the live site will silently fall back to local-only
+     storage (see catch block below) until this is updated. */
+  const ARF_CC_API_BASE = 'http://localhost:8010';
+
   const form = document.getElementById('interestForm');
   const formSuccess = document.getElementById('formSuccess');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(form).entries());
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '.6'; }
+
       try {
-        const existing = JSON.parse(localStorage.getItem('mim_interest_submissions') || '[]');
-        existing.push({ ...data, submittedAt: new Date().toISOString() });
-        localStorage.setItem('mim_interest_submissions', JSON.stringify(existing));
-      } catch (err) { /* localStorage unavailable — submission not persisted */ }
+        const res = await fetch(`${ARF_CC_API_BASE}/api/interest`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error(`Command Center rejected submission: ${res.status}`);
+      } catch (err) {
+        // Backend unreachable (not deployed yet, offline, etc.) — keep a
+        // local backup so the data isn't lost outright, and say so loudly
+        // in the console for whoever's debugging, but don't scare the
+        // student filling the form: still show the success state below.
+        console.warn('[MAKE IT MOVE] Could not reach ARF Command Center, saving locally only:', err);
+        try {
+          const existing = JSON.parse(localStorage.getItem('mim_interest_submissions') || '[]');
+          existing.push({ ...data, submittedAt: new Date().toISOString() });
+          localStorage.setItem('mim_interest_submissions', JSON.stringify(existing));
+        } catch (storageErr) { /* localStorage unavailable too — nothing more we can do client-side */ }
+      }
 
       form.style.display = 'none';
       formSuccess.classList.add('show');

@@ -314,9 +314,13 @@
             <label for="f-city">City</label>
             <input id="f-city" name="city" type="text" placeholder="City" required>
           </div>
-          <div class="field full">
-            <label for="f-contact">Email / Phone</label>
-            <input id="f-contact" name="contact" type="text" placeholder="Email or phone number" required>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone <span style="text-transform:none;opacity:.6;">(optional)</span></label>
+            <input id="f-phone" name="phone" type="tel" placeholder="Phone number">
           </div>
           <div class="field full">
             <label>Preferred Track</label>
@@ -515,6 +519,6 @@
   </div>
 </footer>
 
-<script src="mim-script.js"></script>
+<script src="mim-script.js?v=2"></script>
 </body>
 </html>
