@@ -679,6 +679,25 @@ footer{
 .track-build-page .track-hero-bg{background:radial-gradient(65% 60% at 25% 10%, rgba(61,220,132,.26), transparent 60%),radial-gradient(55% 50% at 90% 80%, rgba(34,211,238,.24), transparent 60%),var(--bg);}
 .track-solve-page .track-hero-bg{background:radial-gradient(65% 60% at 25% 10%, rgba(251,191,36,.28), transparent 60%),radial-gradient(55% 50% at 90% 80%, rgba(255,77,0,.22), transparent 60%),var(--bg);}
 
+/* ---- poster artwork, right-hand side, faded into the dark bg ---- */
+.track-hero-art{
+  position:absolute;
+  top:0;right:0;bottom:0;
+  width:56%;
+  background-size:cover;
+  background-position:center 20%;
+  opacity:.5;
+  z-index:0;
+  -webkit-mask-image:linear-gradient(to right, transparent, black 42%), linear-gradient(to bottom, black 55%, transparent);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right, transparent, black 42%), linear-gradient(to bottom, black 55%, transparent);
+  mask-composite:intersect;
+}
+.track-perform-page .track-hero-art{background-image:url('images/poster-perform.png');}
+.track-think-page .track-hero-art{background-image:url('images/poster-think.png');}
+.track-build-page .track-hero-art{background-image:url('images/poster-build.png');}
+.track-solve-page .track-hero-art{background-image:url('images/poster-solve.png');}
+
 .track-hero-inner{position:relative;z-index:2;max-width:820px;}
 .track-crumb{
   display:flex;align-items:center;gap:12px;margin-bottom:28px;
