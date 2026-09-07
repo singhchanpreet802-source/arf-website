@@ -887,3 +887,105 @@ flex-direction:column;
   .mim-spotlight{padding:70px 6% 70px;}
   .mim-research-grid{grid-template-columns:1fr;gap:22px;}
 }
+
+/* ============================================================
+   TEAM ORG CHART — three-tier flowchart (Leadership / Heads / Assistants)
+   ============================================================ */
+.org-chart{
+  padding:20px 6% 80px;
+  overflow-x:auto;
+}
+.org-chart-inner{
+  min-width:1180px;
+  max-width:1400px;
+  margin:0 auto;
+}
+
+.org-tier1{
+  display:flex;justify-content:center;gap:28px;flex-wrap:wrap;
+  margin-bottom:0;
+}
+.org-node{
+  background:var(--navy);
+  border:1px solid var(--gold);
+  border-radius:6px;
+  padding:20px 26px;
+  text-align:center;
+  min-width:190px;
+}
+.org-node h4{
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  color:var(--ivory);
+  margin-bottom:6px;
+  font-weight:600;
+}
+.org-node p{
+  font-size:11.5px;
+  color:var(--gold-bright);
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  font-weight:600;
+}
+.org-node.lead{box-shadow:0 8px 24px rgba(12,35,64,.18);}
+
+.org-connector-v{
+  width:1px;height:34px;
+  background:var(--gold);
+  margin:0 auto;
+}
+.org-connector-h{
+  height:1px;
+  background:var(--gold);
+  margin:0 auto;
+}
+
+.org-tier2{
+  display:flex;
+  gap:18px;
+  padding-top:0;
+}
+.org-dept{
+  flex:1;
+  min-width:150px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.org-dept-tick{
+  width:1px;height:24px;
+  background:var(--line);
+}
+.org-node.head{
+  background:var(--ivory-soft);
+  border:1px solid var(--navy);
+  min-width:150px;
+  width:100%;
+}
+.org-node.head h4{color:var(--navy);font-size:15px;}
+.org-node.head p{color:var(--muted);font-weight:500;letter-spacing:.6px;}
+
+.org-node.assistant{
+  background:transparent;
+  border:1px dashed var(--line);
+  min-width:150px;
+  width:100%;
+  padding:14px 18px;
+}
+.org-node.assistant h4{color:var(--navy);font-size:13.5px;}
+.org-node.assistant p{color:var(--muted);font-size:10.5px;}
+
+.org-legend{
+  display:flex;gap:26px;justify-content:center;flex-wrap:wrap;
+  margin-top:36px;
+  font-size:12px;color:var(--muted);
+}
+.org-legend span{display:inline-flex;align-items:center;gap:8px;}
+.org-legend i{width:14px;height:14px;border-radius:3px;display:inline-block;}
+.org-legend .sw-lead{background:var(--navy);border:1px solid var(--gold);}
+.org-legend .sw-head{background:var(--ivory-soft);border:1px solid var(--navy);}
+.org-legend .sw-assist{background:transparent;border:1px dashed var(--line);}
+
+@media (max-width:900px){
+  .org-chart-inner{min-width:1000px;}
+}
